@@ -1,3 +1,16 @@
+# Beamlink Fork of Magma
+
+This fork serves as the base for Beamlink's terraform deployment of Magma (vanilla).
+There are a few changes to the orc8r terraform scripts, primarily relating to:
+- Beamlink-specific deployment options (EC2 instance sizes, orc8r domain name, etc.)
+- Updates to terraform files to fix deployment issues (updated provider versions, etc.)
+
+Currently, these changes reside on the `bl_v1.8` branch of this repo.
+The terraform root module is stored in the top-level `bl_deploy` directory.
+
+
+
+
 <h1 align="center">
     <a href="https://www.magmacore.org/"><img src="https://raw.githubusercontent.com/magma/magma/master/docs/docusaurus/static/img/magma-logo-purple.svg" alt="Magma" width="550"></a>
 </h1>
