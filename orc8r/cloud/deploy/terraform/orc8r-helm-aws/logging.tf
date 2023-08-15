@@ -20,9 +20,11 @@ resource "helm_release" "fluentd" {
 
   name       = var.fluentd_deployment_name
   namespace  = kubernetes_namespace.orc8r.metadata[0].name
-  repository = local.stable_helm_repo
+  # repository = local.stable_helm_repo
+  repository = "https://charts.bitnami.com/bitnami"
   chart      = "fluentd"
-  version    = "2.3.2"
+  # version    = "2.3.2"
+  version    = "5.8.7"
   keyring    = ""
 
   values = [<<EOT
@@ -132,22 +134,24 @@ resource "helm_release" "elasticsearch_curator" {
   count = var.elasticsearch_endpoint == null || var.orc8r_is_staging_deployment == true ? 0 : 1
 
   name       = var.elasticsearch_curator_name
-  repository = local.stable_helm_repo
+  # repository = local.stable_helm_repo
+  repository = "https://lebenitza.github.io/charts"
   chart      = "elasticsearch-curator"
   namespace  = kubernetes_namespace.monitoring[0].metadata[0].name
-  version    = "2.2.3"
+  # version    = "2.2.3"
+  version    = "3.2.3"
   keyring    = ""
 
   values = [<<EOT
-  cronjob:    
+  cronjob:
     schedule: "0 0 * * *"
     annotations: {}
     labels: {}
     concurrencyPolicy: ""
     failedJobsHistoryLimit: ""
     successfulJobsHistoryLimit: ""
-    jobRestartPolicy: Never  
-  
+    jobRestartPolicy: Never
+
   configMaps:
     config_yml: |-
       ---
@@ -196,7 +200,7 @@ resource "helm_release" "elasticsearch_curator" {
           - filtertype: space
             disk_space: ${var.elasticsearch_disk_threshold}
             use_age: True
-            source: creation_date            
+            source: creation_date
   EOT
   ]
 }

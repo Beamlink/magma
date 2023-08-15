@@ -30,9 +30,12 @@ resource "helm_release" "external_dns" {
   count = var.orc8r_is_staging_deployment == true ? 0 : 1
 
   name       = var.external_dns_deployment_name
-  repository = local.stable_helm_repo
+  # repository = local.stable_helm_repo
+  repository = "https://kubernetes-sigs.github.io/external-dns/"
   chart      = "external-dns"
-  version    = "2.19.1"
+  # version    = "2.19.1"
+  # version    = "1.13.0"
+  version    = "1.11.0"
   namespace  = "kube-system"
   keyring    = ""
 
@@ -50,7 +53,8 @@ resource "helm_release" "external_dns" {
 resource "helm_release" "cert-manager" {
   count = var.deploy_cert_manager_helm_chart ? 1 : 0
 
-  version          = "1.6.1"
+  # version          = "1.6.1" # released 1 Nov. 2021
+  version          = "1.12.3" # 26 July 2023
   name             = "cert-manager"
   chart            = "cert-manager"
   namespace        = "cert-manager"

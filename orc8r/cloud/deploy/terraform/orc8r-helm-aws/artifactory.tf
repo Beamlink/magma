@@ -25,6 +25,7 @@ locals {
   }
   dockercfg           = var.docker_user != "" ? local.dockercfg_with_cred : local.dockercfg_without_cred
   stable_helm_repo    = "https://charts.helm.sh/stable"
+  # stable_helm_repo    = "https://artifactory.io"
   incubator_helm_repo = "https://charts.helm.sh/incubator"
 }
 

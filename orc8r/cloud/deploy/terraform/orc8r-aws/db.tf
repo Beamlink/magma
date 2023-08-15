@@ -11,16 +11,19 @@
 # limitations under the License.
 ################################################################################
 
+
+
 resource "aws_db_instance" "default" {
-  identifier        = var.orc8r_db_identifier
   allocated_storage = var.orc8r_db_storage_gb
+  db_name           = var.orc8r_db_name
   engine            = "postgres"
   engine_version    = var.orc8r_db_engine_version
+  identifier        = var.orc8r_db_identifier
   instance_class    = var.orc8r_db_instance_class
 
-  name     = var.orc8r_db_name
   username = var.orc8r_db_username
   password = var.orc8r_db_password
+  # manage_master_user_password = true
 
   vpc_security_group_ids = [aws_security_group.default.id]
 

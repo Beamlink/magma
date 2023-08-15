@@ -13,11 +13,12 @@
 
 provider "aws" {
   region = var.region
+  # region = "us-east-2"
 }
 
-provider "random" {
-  version = "~> 2.1"
-}
+# provider "random" {
+#   version = "~> 2.1"
+# }
 
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
@@ -32,7 +33,7 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
+  # load_config_file       = false
   # See https://github.com/terraform-providers/terraform-provider-kubernetes/issues/759
 }
 
@@ -40,22 +41,29 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 2.6.0"
+      # version = ">= 2.6.0"
+      version = "4.67.0"
     }
 
     random = {
       source  = "hashicorp/random"
-      version = "~> 2.1"
+      # version = "~> 2.1"
+      # version = ">= 2.1"
+      version = "3.5.1"
     }
 
     tls = {
       source  = "hashicorp/tls"
-      version = "~> 2.1"
+      # version = "~> 2.1"
+      # version = ">= 2.1"
+      version = "4.0.4"
     }
 
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 1.11.1"
+      # version = ">= 1.21.1"
+      # version = ">= 2.14.0"
+      version = ">= 2.22.0"
     }
   }
 }
