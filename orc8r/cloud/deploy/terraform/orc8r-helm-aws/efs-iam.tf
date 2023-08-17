@@ -1,10 +1,20 @@
 data "aws_iam_policy_document" "efs_csi_driver" {
   statement {
     actions = [
-      "elasticfilesystem:DescribeAccessPoints",
-      "elasticfilesystem:DescribeFileSystems",
-      "elasticfilesystem:DescribeMountTargets",
-      "ec2:DescribeAvailabilityZones"
+    # See this Github issue: https://github.com/kubernetes-sigs/aws-efs-csi-driver/issues/1056
+    # This ec2 permission is not listed in the new set from Github issue above...including just in case
+    "ec2:DescribeAvailabilityZones",
+    "elasticfilesystem:DescribeMountTargets",
+    "elasticfilesystem:DescribeAccessPoints",
+    "elasticfilesystem:DescribeFileSystems",
+    "elasticfilesystem:ClientMount",
+    "elasticfilesystem:ClientWrite",
+    "elasticfilesystem:CreateTags",
+    "elasticfilesystem:CreateMountTarget",
+    "elasticfilesystem:DeleteMountTarget",
+    "elasticfilesystem:DeleteTags",
+    "elasticfilesystem:TagResource",
+    "elasticfilesystem:UntagResource"
     ]
     resources = ["*"]
     effect    = "Allow"
@@ -39,7 +49,7 @@ data "aws_iam_policy_document" "efs_csi_driver" {
 
 resource "aws_iam_policy" "efs_csi_driver" {
   name        = "${var.cluster_name}-efs-csi-driver"
-  path        = "/"
+  # path        = "/"
   description = "Policy for the EFS CSI driver"
 
   policy = data.aws_iam_policy_document.efs_csi_driver.json

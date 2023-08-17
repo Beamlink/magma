@@ -20,7 +20,8 @@ resource "kubernetes_persistent_volume_claim" "storage" {
     }
     promdata = {
       access_mode = "ReadWriteOnce"
-      storage     = "64Gi"
+      # storage     = "64Gi"
+      storage     = "2Gi"
     }
     grafanadata = {
       access_mode = "ReadWriteMany"
